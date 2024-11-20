@@ -15,9 +15,41 @@ namespace BloodBank_Management_REST_API.Controllers
 
         // GET: api/bloodbank
         [HttpGet]
-        public IActionResult GetAllEntries()
+        public IActionResult GetAllEntries([FromQuery] int page = 1, [FromQuery] int size = 10)
         {
-            return Ok(_bloodBankEntries);
+            // Validate page and size parameters
+            if (page <= 0 || size <= 0)
+            {
+                return BadRequest(new { Message = "Page and size must be positive integers." });
+            }
+
+            // Calculate total items and pages
+            int totalItems = _bloodBankEntries.Count;
+            int totalPages = (int)Math.Ceiling(totalItems / (double)size);
+
+            // Handle case where page exceeds available pages
+            if (page > totalPages && totalItems > 0)
+            {
+                return BadRequest(new { Message = "Requested page exceeds available pages." });
+            }
+
+            // Apply pagination
+            var paginatedEntries = _bloodBankEntries
+                .Skip((page - 1) * size)
+                .Take(size)
+                .ToList();
+
+            // Response with metadata
+            var response = new
+            {
+                TotalItems = totalItems,
+                TotalPages = totalPages,
+                CurrentPage = page,
+                PageSize = size,
+                Data = paginatedEntries
+            };
+
+            return Ok(response);
         }
 
         // GET: api/bloodbank/{id}
