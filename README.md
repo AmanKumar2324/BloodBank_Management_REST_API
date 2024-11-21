@@ -46,7 +46,7 @@ This project is a RESTful API for managing a blood bank system, built using ASP.
 
 ### CRUD Operations
 #### Create Entry
-- Endpoint: POST /api/bloodbank
+- Endpoint: `POST /api/bloodbank`
 - Description: Add a new blood bank entry.
 - Sample Request Body:
   ```
@@ -61,15 +61,15 @@ This project is a RESTful API for managing a blood bank system, built using ASP.
     "status": "Available"
   }
 #### Read all entries 
-- Endpoint: GET /api/bloodbank
+- Endpoint: `GET /api/bloodbank`
 - Description: Retrieve all blood bank entries.
 
 #### Read entries by id
-- Endpoint: GET /api/bloodbank/{id}
+- Endpoint: `GET /api/bloodbank/{id}`
 - Description: Retrieve a specific blood bank entry by ID.
 
 #### Update entries
-- Endpoint: PUT /api/bloodbank/{id}
+- Endpoint: `PUT /api/bloodbank/{id}`
 - Description: Update an existing entry.
 - Sample Request Body:
   ```
@@ -85,14 +85,14 @@ This project is a RESTful API for managing a blood bank system, built using ASP.
   }
 
 #### Delete Entry
-- Endpoint: DELETE /api/bloodbank/{id}
+- Endpoint: `DELETE /api/bloodbank/{id}`
 - Description: Remove a blood bank entry by ID.
 
 #### Pagination
-- Endpoint: GET /api/bloodbank?page={pageNumber}&size={pageSize}
+- Endpoint: `GET /api/bloodbank?page={pageNumber}&size={pageSize}`
 - Description: Retrieve paginated results.
 - Example:
-  - Request: GET /api/bloodbank?page=1&size=2
+  - Request: `GET /api/bloodbank?page=1&size=2`
   - Response:
     ```
     {
@@ -103,21 +103,21 @@ This project is a RESTful API for managing a blood bank system, built using ASP.
     ]
     }
 #### Filtering
-- Endpoint: GET /api/bloodbank/filter
+- Endpoint: `GET /api/bloodbank/filter`
 - Query Parameters:
   - bloodType: Filter by blood type (e.g., A+).
   - status: Filter by status (e.g., Available).
   - donorName: Filter by donor name (partial match).
 - Example:
-- Request: GET /api/bloodbank/filter?bloodType=A+&status=Available
+- Request: `GET /api/bloodbank/filter?bloodType=A+&status=Available`
 
 #### Sorting
-- Endpoint: GET /api/bloodbank/sort
+- Endpoint: `GET /api/bloodbank/sort`
 - Query Parameters:
   - sortBy: Field to sort by (bloodType, collectionDate).
   - descending: true for descending order, false for ascending.
 - Example:
-- Request: GET /api/bloodbank/sort?sortBy=collectionDate&descending=true
+- Request: `GET /api/bloodbank/sort?sortBy=collectionDate&descending=true`
 
 ## Sample JSON Payloads
 
@@ -141,6 +141,7 @@ This project is a RESTful API for managing a blood bank system, built using ASP.
 
 ## Screenshots
 
+![image](https://github.com/user-attachments/assets/3b2c4fab-cd76-44df-805d-c1f8351444ea)
 
 
 
