@@ -4,6 +4,7 @@ using BloodBank_Management_REST_API.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.AspNetCore.Http.Connections;
 
 namespace BloodBank_Management_REST_API.Controllers
 {
@@ -138,5 +139,74 @@ namespace BloodBank_Management_REST_API.Controllers
 
             return NoContent();
         }
+
+        //FILTER : On the basis of blood type, status and donor name
+
+        [HttpGet("fiter")]
+        public IActionResult FilterEntries(
+            [FromQuery] string? bloodType = null,
+            [FromQuery] string? status = "Available",
+            [FromQuery] string? donorName = null
+            )
+        {
+            var filteredEnteries = _bloodBankEntries.AsQueryable();
+            if (!string.IsNullOrEmpty(bloodType))
+            {
+                filteredEnteries = filteredEnteries.Where(e => e.BloodType.Equals(bloodType, StringComparison.OrdinalIgnoreCase));
+            }
+            if(!string.IsNullOrEmpty(status))
+            {
+                filteredEnteries = filteredEnteries.Where(e => e.Status.Equals(status, StringComparison.OrdinalIgnoreCase));
+            }
+            if(!string.IsNullOrEmpty(donorName))
+            {
+                filteredEnteries = filteredEnteries.Where(e => e.DonorName.Equals(donorName, StringComparison.OrdinalIgnoreCase));
+
+            }
+            //if no result is found
+            if(!filteredEnteries.Any())
+            {
+                return NotFound(new { Message = "No entries match the filtering criteria" });
+            }
+            return Ok(filteredEnteries.ToList());
+        }
+
+        //SORTING: On the basis of BloodType and the CollectionDate
+        [HttpGet("sort")]
+        public IActionResult SortEntries(
+            [FromQuery] string? sortBy = null,
+            [FromQuery] bool descending = false)
+        {
+            // Ensure sortBy is valid
+            if (string.IsNullOrEmpty(sortBy))
+            {
+                return BadRequest(new { Message = "The sortBy parameter is required." });
+            }
+
+            var sortedEntries = _bloodBankEntries.AsQueryable();
+
+            // Sorting logic
+            switch (sortBy.ToLower())
+            {
+                case "bloodtype":
+                    sortedEntries = descending
+                        ? sortedEntries.OrderByDescending(e => e.BloodType)
+                        : sortedEntries.OrderBy(e => e.BloodType);
+                    break;
+
+                case "collectiondate":
+                    sortedEntries = descending
+                        ? sortedEntries.OrderByDescending(e => e.CollectionDate)
+                        : sortedEntries.OrderBy(e => e.CollectionDate);
+                    break;
+
+                default:
+                    return BadRequest(new { Message = $"Invalid sortBy parameter: {sortBy}. Use 'bloodType' or 'collectionDate'." });
+            }
+
+            return Ok(sortedEntries.ToList());
+        }
+
+
     }
 }
