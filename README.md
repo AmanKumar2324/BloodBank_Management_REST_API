@@ -12,6 +12,7 @@ This project is a RESTful API for managing a blood bank system, built using ASP.
   - Sorting
 - Sample JSON Payloads
 - Swagger Documentation
+- Video Demonstration
 - Screenshots
 
 ## Features
@@ -138,6 +139,10 @@ This project is a RESTful API for managing a blood bank system, built using ASP.
 
 - Access Swagger at (https://localhost:7179/swagger/index.html).
 - View and interact with all endpoints.
+
+## Video Demonstration
+
+- Video Link: https://drive.google.com/file/d/1_31tJBcVlcVwwI0_O3N6bxk4M4Pc00xq/view?usp=sharing
 
 ## Screenshots
 
